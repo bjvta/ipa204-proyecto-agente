@@ -27,7 +27,7 @@ No prueben solo casos fáciles. Incluyan:
 - **Casos normales**, donde todo está bien.
 - **Casos límite**, justo en el borde de una regla: si la regla dice «más de 30», prueben con 30 y con 31.
 - **Casos raros** pero posibles: valores muy altos o muy bajos, combinaciones poco comunes.
-- **Un caso donde se activen dos reglas a la vez.** ¿Las recomendaciones se contradicen?
+- **El choque de su ficha:** el caso donde dos reglas recomiendan cosas distintas. ¿Gana la que debe ganar?
 
 ## Si falla
 

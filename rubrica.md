@@ -11,10 +11,9 @@
 
 | Criterio | Puntos |
 | --- | --- |
-| Problema y usuario claros | 1 |
-| Entre 3 y 5 datos de entrada, con tipo y unidad | 1 |
-| Entre 4 y 8 reglas «si… entonces», con nivel y «por qué» | 1 |
-| Fuentes de los valores anotadas | 1 |
+| Fuente del mundo real: entrevista resumida o fuente técnica completa | 2 |
+| Problema, usuario y entre 3 y 5 datos de entrada con su unidad | 1 |
+| Entre 4 y 8 reglas con su fuente, una que combine dos datos y un choque entre reglas | 1 |
 
 ## Hito 3 · Prototipo (6 puntos) · jueves 03/12
 
@@ -46,12 +45,12 @@
 
 | Criterio | Puntos |
 | --- | --- |
-| Explica el problema y el agente con claridad | 2 |
+| Explica el problema y el agente con claridad | 1 |
 | Demostración en vivo que funciona, con dos casos | 3 |
-| Justifica sus reglas con lo visto en clase o con fuentes | 2 |
+| Justifica sus reglas con su entrevista o su fuente | 2 |
+| Mejora obligatoria funcionando y bien explicada | 2 |
 | Muestra las pruebas y lo que corrigieron | 1 |
-| Reconoce límites y propone una mejora | 1 |
-| Los dos integrantes participan y responden preguntas | 1 |
+| Defensa individual: cada integrante explica la regla que elige el docente | 1 |
 
 ## Ensayo general · viernes 11/12
 

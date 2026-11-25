@@ -17,18 +17,15 @@ No necesitan saber programar. Usarán **vibecoding**: le piden a una IA (ChatGPT
 
 Es el mismo agente de la clase 1, con las reglas de experto de las clases 4 y 10.
 
-## Ejemplos para inspirarse
+## Un ejemplo a medias
 
-| Carrera | Ejemplo | Probarlo | Código |
-| --- | --- | --- | --- |
-| Agroecológica y Desarrollo Rural Ambiental | Asesor de riego para la parcela | [Abrir](https://bjvta.github.io/ipa204-proyecto-agente/ejemplos/agroecologia-riego/) | [`index.html`](ejemplos/agroecologia-riego/index.html) |
-| Producción e Innovación Alimentaria | Vigía de la cadena de frío | [Abrir](https://bjvta.github.io/ipa204-proyecto-agente/ejemplos/alimentos-cadena-de-frio/) | [`index.html`](ejemplos/alimentos-cadena-de-frio/index.html) |
+[**Vigía de la cadena de frío**](https://bjvta.github.io/ipa204-proyecto-agente/ejemplo/) ([código](ejemplo/index.html)): ábranlo y pruébenlo para ver cómo funciona un agente. Está **incompleto a propósito**: tiene solo 2 reglas y valores ilustrativos. El suyo tiene que ser mucho más que esto.
 
-La [plantilla](https://bjvta.github.io/ipa204-proyecto-agente/plantilla/) también se puede abrir para ver cómo funciona antes de cambiarla.
+La [plantilla](https://bjvta.github.io/ipa204-proyecto-agente/plantilla/) es el punto de partida de su agente.
 
-Más ideas: diagnóstico de plagas por síntomas, guía de compostaje, calendario de siembra, control de secado de granos, asistente de un punto crítico HACCP, estimador de vida útil, revisión de etiquetas, control de fermentación de yogur.
+Ideas de problemas: riego de una parcela, diagnóstico de plagas por síntomas, compostaje, calendario de siembra, secado de granos, un punto crítico HACCP, vida útil de un producto, fermentación de yogur, recepción de leche cruda.
 
-**Elijan un problema propio.** No pueden entregar los ejemplos con otro nombre.
+**Elijan un problema propio.** La cadena de frío del ejemplo no se puede usar como proyecto.
 
 ## Calendario
 
@@ -59,14 +56,20 @@ Los criterios de cada hito están en la [rúbrica](rubrica.md).
 
 ```
 plantilla/index.html     La plantilla del agente: el punto de partida
-ejemplos/                Dos agentes de ejemplo, uno por carrera
+ejemplo/                 Un agente de ejemplo, incompleto a propósito
 guia/                    El paso a paso
 rubrica.md               Cómo se califica cada hito
 ```
 
+## Lo que se exige
+
+1. **Datos del mundo real.** Sus reglas salen de una **entrevista** a alguien que trabaja en el tema (un productor, una persona de planta, un técnico) o de una **fuente técnica concreta** (un manual, una norma, un artículo). Lo anotan en la ficha. No valen valores inventados.
+2. **Una regla difícil.** Al menos una regla combina dos datos (por ejemplo, humedad **y** etapa del cultivo). Además, encuentran un caso donde dos reglas recomiendan cosas distintas y explican cuál debe ganar.
+3. **Una mejora obligatoria.** Su agente incluye una de las [mejoras de la guía](guia/2-vibecoding.md#mejora-obligatoria): grados como en lógica difusa, un puntaje de riesgo con pesos o prioridad entre reglas.
+4. **Defensa individual.** En la presentación, cada integrante explica una regla que elige el docente. Los dos tienen que entender todo el agente.
+
 ## Reglas del proyecto
 
-- Trabajan en parejas. Los dos tienen que poder explicar cómo decide su agente.
-- Pueden usar IA para escribir el código, pero **las reglas las deciden ustedes** y deben poder justificarlas con lo visto en clase o con una fuente.
-- Si usan valores (temperaturas, porcentajes, tiempos), anoten de dónde salen.
+- Trabajan en parejas.
+- Pueden usar IA para escribir el código, pero **las reglas las deciden ustedes** con su entrevista o su fuente.
 - Su agente **recomienda**: no reemplaza a una persona experta. Debe decirlo en pantalla.

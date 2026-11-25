@@ -84,8 +84,10 @@ const AGENTE = {
   ],
 
   // DECIDE: reglas «si… entonces». Se revisan todas, en orden.
-  // nivel: "ok" (verde), "aviso" (naranja) o "alerta" (rojo).
+  // nivel: "ok" (verde), "aviso" (naranja) o "alerta" (rojo). Las alertas se muestran primero.
   // porque: explica en palabras sencillas por qué se activó la regla.
+  // detener: true (opcional) hace que, si esta regla se cumple, no se revisen las siguientes.
+  // entonces y porque pueden ser textos fijos o calculados: (d) => `Grado ${...}`
   reglas: [
     {
       si: (d) => d.dato1 > 80,
@@ -141,13 +143,19 @@ function leerDatos() {
 
 function decidir(d) {
   const activas = [];
+  const texto = (t) => (typeof t === "function" ? t(d) : t); // permite textos calculados con los datos
   for (const r of AGENTE.reglas) {
     try {
-      if (r.si(d)) activas.push(r);
+      if (r.si(d)) {
+        activas.push({ ...r, entonces: texto(r.entonces), porque: texto(r.porque) });
+        if (r.detener) break; // una regla con detener: true tiene prioridad sobre las siguientes
+      }
     } catch (error) {
       activas.push({ entonces: "Error en una regla: revísala.", nivel: "alerta", porque: String(error) });
     }
   }
+  const orden = { alerta: 0, aviso: 1, ok: 2 };
+  activas.sort((a, b) => (orden[a.nivel] ?? 2) - (orden[b.nivel] ?? 2)); // las alertas primero
   return activas.length ? activas : [{ ...AGENTE.sinReglas, nivel: "ok" }];
 }
 

@@ -16,7 +16,32 @@ Copien esta ficha en un documento, complétenla y entréguenla en la plataforma.
 - ¿Quién lo usaría? (un productor, una operaria de planta, un técnico…)
 - ¿Qué pasa hoy sin el agente?
 
-## 2. Percibe: los datos de entrada
+## 2. La fuente: de dónde sale el saber de su agente
+
+Un sistema experto guarda el saber de una persona experta (clase 4). Elijan **una** de estas dos opciones.
+
+**Opción A · Entrevista** (recomendada)
+
+Conversen 15 minutos con alguien que trabaje en el tema: un productor, una persona de una planta o de un laboratorio, un técnico agrícola, una persona de su familia que lo haga todos los días.
+
+- Nombre (o iniciales) y a qué se dedica:
+- Fecha y forma (en persona, llamada, mensajes):
+
+Preguntas guía:
+
+1. ¿Qué decisión toma usted seguido sobre [el tema]?
+2. ¿En qué se fija para decidir? ¿Qué mide o qué mira?
+3. ¿A partir de qué valor cambia lo que hace? («si pasa de…, entonces…»)
+4. ¿Qué errores son los más comunes? ¿Qué pasa cuando alguien se equivoca?
+5. ¿Hay casos donde la regla de siempre no sirve?
+
+Resumen de lo que respondió (5 a 8 líneas):
+
+**Opción B · Fuente técnica**
+
+Un manual, una norma, una guía de una institución o un artículo. Anoten el título, el autor o la institución, el año y el enlace o la página. Copien los valores que usarán.
+
+## 3. Percibe: los datos de entrada
 
 Entre 3 y 5 datos. Para cada uno:
 
@@ -28,36 +53,39 @@ Entre 3 y 5 datos. Para cada uno:
 | | | | |
 | | | | |
 
-## 3. Decide: las reglas
+## 4. Decide: las reglas
 
-Entre 4 y 8 reglas «si… entonces». Para cada una:
+Entre 4 y 8 reglas «si… entonces». Cada valor tiene que salir de su fuente.
 
-| # | Si… (condición) | Entonces… (acción) | Nivel | Por qué / fuente |
-| --- | --- | --- | --- | --- |
-| 1 | Ejemplo: humedad menor a 30 % y lluvia menor a 5 mm | Regar hoy | alerta | Suelo seco y sin lluvia (valor de un manual de riego) |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
+| # | Si… (condición) | Entonces… (acción) | Nivel | Por qué | Fuente |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Ejemplo: humedad menor a 30 % **y** lluvia menor a 5 mm | Regar hoy | alerta | Suelo seco y sin lluvia | Entrevista a don J. M., productor |
+| 2 | | | | | |
+| 3 | | | | | |
+| 4 | | | | | |
 
 Niveles: **ok** (todo bien), **aviso** (atención) o **alerta** (actuar ya).
 
-¿Qué dice el agente si **ninguna** regla se cumple?
+- **La regla difícil:** ¿cuál de sus reglas combina dos datos? (número de regla)
+- **El choque:** describan un caso en el que dos reglas recomienden cosas distintas. ¿Cuál debe ganar y por qué?
+- ¿Qué dice el agente si **ninguna** regla se cumple?
 
-## 4. Actúa: qué hace
+## 5. Actúa: qué hace
 
 - ¿Qué recomendaciones da?
 - ¿Qué **no** hace o no sabe? (sus límites)
 
-## 5. De dónde salen los valores
+## 6. La mejora que van a agregar
 
-Anoten las fuentes de sus números: un apunte de clase, un manual, una norma, una entrevista a alguien que trabaja en eso.
+Elijan una de la [guía de vibecoding](2-vibecoding.md#mejora-obligatoria) y expliquen en 2 líneas cómo la usarán en su agente.
 
 ---
 
 ## Listo cuando…
 
 - [ ] El problema es concreto y de su carrera.
+- [ ] Tiene una entrevista resumida o una fuente técnica completa.
 - [ ] Tiene entre 3 y 5 datos de entrada, con su unidad.
-- [ ] Tiene entre 4 y 8 reglas, cada una con su «por qué».
-- [ ] Dice qué hace si no se cumple ninguna regla.
-- [ ] Anota de dónde salen los valores.
+- [ ] Tiene entre 4 y 8 reglas, cada una con su «por qué» y su fuente.
+- [ ] Una regla combina dos datos y describe un choque entre reglas.
+- [ ] Eligió la mejora obligatoria.

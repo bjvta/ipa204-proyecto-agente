@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi agente</title>
+<style>
+  :root{--fondo:#f4f1e6;--verde:#1e3d2f;--hoja:#3f7a55;--mango:#f0973a;--rojo:#c8553d;--suave:#5b6f62;--tarjeta:#fff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--fondo);color:var(--verde);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+  header{background:var(--verde);color:#fff;padding:28px 20px}
+  header .contenedor{max-width:760px;margin:auto}
+  header small{color:var(--mango);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.8rem}
+  h1{margin:4px 0 6px;font-size:1.9rem;line-height:1.15}
+  header p{margin:0;opacity:.9}
+  main{max-width:760px;margin:auto;padding:20px}
+  .tarjeta{background:var(--tarjeta);border-radius:16px;padding:20px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  h2{font-size:1.15rem;margin:0 0 12px}
+  h2 span{display:inline-block;background:var(--mango);color:#fff;border-radius:999px;font-size:.75rem;padding:2px 10px;margin-right:8px;vertical-align:middle}
+  label{display:block;font-weight:600;margin:12px 0 4px}
+  label small{font-weight:400;color:var(--suave)}
+  input,select{width:100%;padding:10px 12px;border:1.5px solid #cfd8c4;border-radius:10px;font-size:1rem;background:#fff;color:inherit}
+  input:focus,select:focus{outline:none;border-color:var(--mango)}
+  button{border:0;border-radius:999px;padding:12px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+  .principal{background:var(--mango);color:#fff;margin-top:16px;width:100%}
+  .secundario{background:#e7ece0;color:var(--verde);padding:8px 16px;font-size:.9rem}
+  .accion{border-left:6px solid var(--hoja);background:#f0f5ec;border-radius:10px;padding:12px 14px;margin:10px 0}
+  .accion.aviso{border-color:var(--mango);background:#fdf3e7}
+  .accion.alerta{border-color:var(--rojo);background:#fbecea}
+  .accion b{display:block;font-size:1.05rem}
+  .accion .porque{color:var(--suave);font-size:.9rem;margin-top:4px}
+  .vacio{color:var(--suave)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #e3e8dc;vertical-align:top}
+  .fila-botones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  footer{max-width:760px;margin:auto;padding:0 20px 30px;color:var(--suave);font-size:.85rem}
+</style>
+</head>
+<body>
+<header><div class="contenedor">
+  <small id="carrera"></small>
+  <h1 id="nombre"></h1>
+  <p id="descripcion"></p>
+</div></header>
+
+<main>
+  <section class="tarjeta">
+    <h2><span>1 · Percibe</span>Datos de entrada</h2>
+    <form id="formulario"></form>
+    <button class="principal" type="submit" form="formulario">Consultar al agente</button>
+  </section>
+
+  <section class="tarjeta">
+    <h2><span>2 · Decide y actúa</span>Recomendación</h2>
+    <div id="resultado"><p class="vacio">Completa los datos y pulsa «Consultar al agente».</p></div>
+  </section>
+
+  <section class="tarjeta">
+    <h2><span>3 · Registra</span>Historial de consultas</h2>
+    <div id="historial"><p class="vacio">Todavía no hay consultas.</p></div>
+    <div class="fila-botones">
+      <button class="secundario" id="descargar" type="button">Descargar historial (CSV)</button>
+      <button class="secundario" id="borrar" type="button">Borrar historial</button>
+    </div>
+  </section>
+</main>
+<footer id="pie"></footer>
+
+<script>
+// =====================================================================
+// EDITA DESDE AQUÍ · Todo lo que hace tu agente está en este bloque
+// =====================================================================
+const AGENTE = {
+  nombre: "Nombre de tu agente",
+  carrera: "Tu carrera · IPA 204",
+  descripcion: "Una frase: qué problema resuelve y para quién.",
+  autores: "Integrante 1 y Integrante 2",
+
+  // PERCIBE: los datos que el agente pide.
+  // tipo "numero" (con min, max y unidad) u "opciones" (con una lista).
+  entradas: [
+    { id: "dato1", etiqueta: "Un dato numérico", tipo: "numero", min: 0, max: 100, unidad: "%" },
+    { id: "dato2", etiqueta: "Un dato con opciones", tipo: "opciones", opciones: ["Opción A", "Opción B"] },
+  ],
+
+  // DECIDE: reglas «si… entonces». Se revisan todas, en orden.
+  // nivel: "ok" (verde), "aviso" (naranja) o "alerta" (rojo).
+  // porque: explica en palabras sencillas por qué se activó la regla.
+  reglas: [
+    {
+      si: (d) => d.dato1 > 80,
+      entonces: "Acción recomendada cuando el dato es alto.",
+      nivel: "alerta",
+      porque: "El dato supera 80 %.",
+    },
+    {
+      si: (d) => d.dato1 >= 50 && d.dato1 <= 80,
+      entonces: "Acción recomendada cuando el dato es medio.",
+      nivel: "aviso",
+      porque: "El dato está entre 50 % y 80 %.",
+    },
+  ],
+
+  // Lo que dice el agente si ninguna regla se activa.
+  sinReglas: { entonces: "Todo en orden. No hace falta actuar.", porque: "Ninguna regla se activó." },
+
+  // Aviso de límites: qué NO hace tu agente.
+  limites: "Este agente da recomendaciones de apoyo. No reemplaza el criterio de una persona experta.",
+};
+// =====================================================================
+// HASTA AQUÍ · No hace falta cambiar lo que sigue
+// =====================================================================
+
+const $ = (id) => document.getElementById(id);
+const CLAVE = "historial-" + AGENTE.nombre;
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+document.title = AGENTE.nombre;
+$("nombre").textContent = AGENTE.nombre;
+$("carrera").textContent = AGENTE.carrera;
+$("descripcion").textContent = AGENTE.descripcion;
+$("pie").textContent = AGENTE.limites + " · Hecho por " + AGENTE.autores + ".";
+
+$("formulario").innerHTML = AGENTE.entradas.map((e) => {
+  const etiqueta = `<label for="${e.id}">${esc(e.etiqueta)}${e.unidad ? ` <small>(${esc(e.unidad)})</small>` : ""}</label>`;
+  if (e.tipo === "opciones") {
+    return etiqueta + `<select id="${e.id}" required>${e.opciones.map((o) => `<option>${esc(o)}</option>`).join("")}</select>`;
+  }
+  return etiqueta + `<input id="${e.id}" type="number" step="any" required` +
+    (e.min !== undefined ? ` min="${e.min}"` : "") + (e.max !== undefined ? ` max="${e.max}"` : "") + ">";
+}).join("");
+
+function leerDatos() {
+  const d = {};
+  for (const e of AGENTE.entradas) {
+    const v = $(e.id).value;
+    d[e.id] = e.tipo === "numero" ? Number(v) : v;
+  }
+  return d;
+}
+
+function decidir(d) {
+  const activas = [];
+  for (const r of AGENTE.reglas) {
+    try {
+      if (r.si(d)) activas.push(r);
+    } catch (error) {
+      activas.push({ entonces: "Error en una regla: revísala.", nivel: "alerta", porque: String(error) });
+    }
+  }
+  return activas.length ? activas : [{ ...AGENTE.sinReglas, nivel: "ok" }];
+}
+
+function mostrar(acciones) {
+  $("resultado").innerHTML = acciones.map((a) =>
+    `<div class="accion ${a.nivel || "ok"}"><b>${esc(a.entonces)}</b><div class="porque">Por qué: ${esc(a.porque || "")}</div></div>`
+  ).join("");
+}
+
+function leerHistorial() {
+  try { return JSON.parse(localStorage.getItem(CLAVE)) || []; } catch { return []; }
+}
+
+function mostrarHistorial() {
+  const h = leerHistorial();
+  if (!h.length) {
+    $("historial").innerHTML = '<p class="vacio">Todavía no hay consultas.</p>';
+    return;
+  }
+  const columnas = AGENTE.entradas.map((e) => e.etiqueta);
+  $("historial").innerHTML = `<table><tr><th>Fecha</th>${columnas.map((c) => `<th>${esc(c)}</th>`).join("")}<th>Recomendación</th></tr>` +
+    h.slice().reverse().map((f) => `<tr><td>${esc(f.fecha)}</td>${AGENTE.entradas.map((e) => `<td>${esc(f.datos[e.id])}</td>`).join("")}<td>${esc(f.acciones.join(" | "))}</td></tr>`).join("") +
+    "</table>";
+}
+
+$("formulario").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const datos = leerDatos();
+  const acciones = decidir(datos);
+  mostrar(acciones);
+  const h = leerHistorial();
+  h.push({ fecha: new Date().toLocaleString("es-BO"), datos, acciones: acciones.map((a) => a.entonces) });
+  localStorage.setItem(CLAVE, JSON.stringify(h));
+  mostrarHistorial();
+});
+
+$("descargar").addEventListener("click", () => {
+  const h = leerHistorial();
+  const celda = (t) => '"' + String(t).replace(/"/g, '""') + '"';
+  const filas = [["Fecha", ...AGENTE.entradas.map((e) => e.etiqueta), "Recomendación"].map(celda).join(",")]
+    .concat(h.map((f) => [f.fecha, ...AGENTE.entradas.map((e) => f.datos[e.id]), f.acciones.join(" | ")].map(celda).join(",")));
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(new Blob(["﻿" + filas.join("\n")], { type: "text/csv" }));
+  enlace.download = "historial-agente.csv";
+  enlace.click();
+});
+
+$("borrar").addEventListener("click", () => {
+  localStorage.removeItem(CLAVE);
+  mostrarHistorial();
+});
+
+mostrarHistorial();
+</script>
+</body>
+</html>

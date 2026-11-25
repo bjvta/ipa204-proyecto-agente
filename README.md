@@ -19,10 +19,12 @@ Es el mismo agente de la clase 1, con las reglas de experto de las clases 4 y 10
 
 ## Ejemplos para inspirarse
 
-| Carrera | Ejemplo | Archivo |
-| --- | --- | --- |
-| Agroecológica y Desarrollo Rural Ambiental | Asesor de riego para la parcela | [`ejemplos/agroecologia-riego`](ejemplos/agroecologia-riego/index.html) |
-| Producción e Innovación Alimentaria | Vigía de la cadena de frío | [`ejemplos/alimentos-cadena-de-frio`](ejemplos/alimentos-cadena-de-frio/index.html) |
+| Carrera | Ejemplo | Probarlo | Código |
+| --- | --- | --- | --- |
+| Agroecológica y Desarrollo Rural Ambiental | Asesor de riego para la parcela | [Abrir](https://bjvta.github.io/ipa204-proyecto-agente/ejemplos/agroecologia-riego/) | [`index.html`](ejemplos/agroecologia-riego/index.html) |
+| Producción e Innovación Alimentaria | Vigía de la cadena de frío | [Abrir](https://bjvta.github.io/ipa204-proyecto-agente/ejemplos/alimentos-cadena-de-frio/) | [`index.html`](ejemplos/alimentos-cadena-de-frio/index.html) |
+
+La [plantilla](https://bjvta.github.io/ipa204-proyecto-agente/plantilla/) también se puede abrir para ver cómo funciona antes de cambiarla.
 
 Más ideas: diagnóstico de plagas por síntomas, guía de compostaje, calendario de siembra, control de secado de granos, asistente de un punto crítico HACCP, estimador de vida útil, revisión de etiquetas, control de fermentación de yogur.
 

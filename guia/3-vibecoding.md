@@ -1,4 +1,4 @@
-# 2 · Crear el agente con vibecoding
+# 3 · Crear el agente con vibecoding
 
 **Vibecoding** es construir un programa conversando con una IA: ustedes dicen qué quieren, la IA escribe el código, ustedes lo prueban y piden cambios.
 
@@ -16,18 +16,23 @@ Copien esta instrucción en la IA. Reemplacen lo que está entre corchetes y peg
 ```text
 Eres un asistente que ayuda a estudiantes de 2.º semestre a construir un agente sencillo.
 
-Te paso una plantilla HTML que ya funciona. Solo debes cambiar el bloque que está entre
-«EDITA DESDE AQUÍ» y «HASTA AQUÍ». No cambies nada más del archivo.
+Te paso una plantilla HTML que ya funciona: mira una foto con un modelo de IA y decide con
+reglas. Solo debes cambiar el bloque que está entre «EDITA DESDE AQUÍ» y «HASTA AQUÍ».
+No cambies nada más del archivo.
 
 Mi agente se llama: [nombre]
 Integrantes: [nombres]
 Carrera: [carrera]
-Resuelve este problema: [2 líneas]
+Qué mira y qué decide: [2 líneas]
 
-Datos de entrada (percibe):
-[pega aquí la tabla de datos de tu ficha]
+Mi modelo de Teachable Machine (tipo "teachable"): [pega aquí tu enlace]
+Las clases del modelo se llaman exactamente así: [Clase 1], [Clase 2], [Otra cosa]
 
-Reglas (decide):
+Datos extra que pide el agente (puede ser ninguno):
+[pega aquí la tabla de datos extra de tu ficha]
+
+Reglas (decide). En las reglas usa d.clase, d.confianza y d.prob["Nombre de clase"],
+y d.<id> para los datos extra:
 [pega aquí la tabla de reglas de tu ficha]
 
 Si no se cumple ninguna regla, el agente dice: [texto]
@@ -45,9 +50,11 @@ Esta es la plantilla:
 1. Copien el código que les dio la IA.
 2. Abran el **Bloc de notas** (Windows) o **TextEdit** en modo texto plano (Mac), peguen y guarden como `index.html`.
 3. Hagan doble clic en el archivo: se abre en el navegador.
-4. Completen el formulario y pulsen **Consultar al agente**.
+4. Esperen «Modelo listo», suban una foto y pulsen **Consultar al agente**.
 
-¿Funciona? Pasen a [publicarlo](3-publicar.md). ¿No funciona? Usen las instrucciones de abajo.
+Si en su computadora dice «No se pudo cargar el modelo», revisen el enlace y la conexión a internet, o pruébenlo directamente en Hugging Face (paso 4): allí siempre funciona.
+
+¿Funciona? Pasen a [publicarlo](4-publicar.md). ¿No funciona? Usen las instrucciones de abajo.
 
 ## Instrucciones para corregir y mejorar
 
@@ -94,24 +101,24 @@ Su agente tiene que incluir **una** de estas tres mejoras. Vale 2 puntos en la p
 
 ### Opción A · Grados, como en lógica difusa (clase 4)
 
-En lugar de decir solo «hace calor» o «no hace calor», el agente calcula **cuánto** (un grado entre 0 y 1) y lo muestra.
+En lugar de decir solo «tiene plaga» o «no tiene plaga», el agente responde **en parte**: usa la confianza del modelo como un grado entre 0 y 1 y da una recomendación distinta según el grado.
 
 ```text
-Quiero que mi agente use grados como en lógica difusa. Para el dato [nombre del dato],
-el conjunto «[alto, caliente, seco…]» vale 0 en [valor] y 1 en [valor], subiendo en línea recta.
-Calcula ese grado dentro de las reglas y muéstralo en el «porque», por ejemplo:
-«Grado de caliente: 0,75». Usa la regla con nivel alerta si el grado es mayor que [valor]
-y aviso si está entre [valor] y [valor]. Cambia solo el bloque EDITA DESDE AQUÍ.
-Devuélveme el archivo completo.
+Quiero que mi agente use grados como en lógica difusa. Usa d.prob["[clase]"] como el grado
+de «[clase]», entre 0 y 1. Si el grado es mayor que [valor], recomienda «[acción fuerte]» con
+nivel alerta; si está entre [valor] y [valor], recomienda «[acción suave]» con nivel aviso.
+Muestra el grado en el «porque», por ejemplo: «Grado de plaga: 0,75».
+Cambia solo el bloque EDITA DESDE AQUÍ. Devuélveme el archivo completo.
 ```
 
 ### Opción B · Puntaje de riesgo con pesos (clase 5)
 
-Como una neurona artificial: cada dato suma o resta según su **peso**, y el total decide.
+Como una neurona artificial: lo que ve el modelo y los datos extra suman o restan según su **peso**, y el total decide.
 
 ```text
 Quiero que mi agente calcule un puntaje de riesgo, como una neurona artificial.
-Datos y pesos: [dato 1] con peso [número], [dato 2] con peso [número], [dato 3] con peso [número].
+Datos y pesos: d.prob["[clase]"] con peso [número], [dato extra 1] con peso [número],
+[dato extra 2] con peso [número].
 Antes, convierte cada dato a una escala de 0 a 1 así: [explica cómo].
 Si el puntaje supera [umbral], recomienda «[acción]» con nivel alerta. Muestra el puntaje
 en el «porque». Cambia solo el bloque EDITA DESDE AQUÍ. Devuélveme el archivo completo.

@@ -5,22 +5,22 @@
 | Criterio | Puntos |
 | --- | --- |
 | Pareja formada y registrada | 1 |
-| Problema concreto, de su carrera, en 2 o 3 líneas | 1 |
+| Problema concreto, de su carrera, y qué clases verá el agente | 1 |
 
-## Hito 2 · Ficha del agente (4 puntos) · lunes 30/11
+## Hito 2 · Ficha y fotos (4 puntos) · lunes 30/11
 
 | Criterio | Puntos |
 | --- | --- |
-| Fuente del mundo real: entrevista resumida o fuente técnica completa | 2 |
-| Problema, usuario y entre 3 y 5 datos de entrada con su unidad | 1 |
-| Entre 4 y 8 reglas con su fuente, una que combine dos datos y un choque entre reglas | 1 |
+| Fuente de las reglas: entrevista resumida o fuente técnica completa | 1 |
+| Clases que se distinguen en una foto, plan de fotos y al menos 10 fotos propias por clase | 2 |
+| Entre 4 y 8 reglas con su fuente, una que combine lo que ve el modelo con otro dato, y un choque | 1 |
 
 ## Hito 3 · Prototipo (6 puntos) · jueves 03/12
 
 | Criterio | Puntos |
 | --- | --- |
-| El enlace de Hugging Face abre el agente y funciona | 2 |
-| Percibe, decide y actúa como dice la ficha | 2 |
+| Modelo entrenado en Teachable Machine con al menos 30 fotos propias por clase | 2 |
+| El enlace de Hugging Face abre el agente, reconoce fotos y decide como dice la ficha | 2 |
 | Cada recomendación explica por qué | 1 |
 | Muestra integrantes y aviso de límites | 1 |
 
@@ -28,8 +28,8 @@
 
 | Criterio | Puntos |
 | --- | --- |
-| 10 casos con la respuesta esperada anotada antes de probar | 2 |
-| Incluye casos límite y un caso con dos reglas activas | 1 |
+| 10 fotos nuevas con la respuesta esperada anotada antes de probar, y su exactitud | 2 |
+| Incluye fotos difíciles, una de «otra cosa» y el caso del choque | 1 |
 | Explica cada error y la corrección | 1 |
 | La versión corregida está publicada | 1 |
 
@@ -46,7 +46,7 @@
 | Criterio | Puntos |
 | --- | --- |
 | Explica el problema y el agente con claridad | 1 |
-| Demostración en vivo que funciona, con dos casos | 3 |
+| Demostración en vivo con la cámara, con dos clases distintas | 3 |
 | Justifica sus reglas con su entrevista o su fuente | 2 |
 | Mejora obligatoria funcionando y bien explicada | 2 |
 | Muestra las pruebas y lo que corrigieron | 1 |

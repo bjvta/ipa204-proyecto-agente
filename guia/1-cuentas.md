@@ -1,6 +1,6 @@
 # 1 · Crear las cuentas
 
-Necesitan dos cuentas gratuitas. Con una por pareja alcanza, pero conviene que los dos tengan la suya.
+Necesitan dos cuentas gratuitas y una herramienta que no pide cuenta. Con una por pareja alcanza, pero conviene que los dos tengan la suya.
 
 ## Hugging Face
 
@@ -11,6 +11,10 @@ Hugging Face es la plataforma donde se publican modelos y aplicaciones de IA. Ah
 3. **Confirmen el correo**: les llega un mensaje con un enlace.
 
 No necesitan pagar nada. Su agente será un **Space estático** (una página web), que es gratuito para todas las cuentas.
+
+## Teachable Machine
+
+[Teachable Machine](https://teachablemachine.withgoogle.com) es la herramienta de Google donde entrenarán el modelo con sus fotos. **No pide cuenta** para entrenar. Para guardar el proyecto y seguir otro día, usen una cuenta de Google (la de Gmail sirve).
 
 ## Una IA para conversar
 

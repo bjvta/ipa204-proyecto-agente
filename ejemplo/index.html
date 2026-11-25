@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mi agente</title>
+<title>Mi agente que ve</title>
 <style>
   :root{--fondo:#f4f1e6;--verde:#1e3d2f;--hoja:#3f7a55;--mango:#f0973a;--rojo:#c8553d;--suave:#5b6f62;--tarjeta:#fff}
   *{box-sizing:border-box}
@@ -22,8 +22,17 @@
   input,select{width:100%;padding:10px 12px;border:1.5px solid #cfd8c4;border-radius:10px;font-size:1rem;background:#fff;color:inherit}
   input:focus,select:focus{outline:none;border-color:var(--mango)}
   button{border:0;border-radius:999px;padding:12px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+  button:disabled{opacity:.5;cursor:wait}
   .principal{background:var(--mango);color:#fff;margin-top:16px;width:100%}
   .secundario{background:#e7ece0;color:var(--verde);padding:8px 16px;font-size:.9rem}
+  .foto{display:flex;align-items:center;justify-content:center;gap:10px;border:2px dashed #cfd8c4;border-radius:14px;padding:18px;cursor:pointer;font-weight:700;color:var(--hoja);background:#f8faf5}
+  .foto input{display:none}
+  #vista{display:none;max-width:100%;max-height:320px;border-radius:14px;margin:12px auto 0}
+  .estado{font-size:.9rem;color:var(--suave);margin-top:8px}
+  .barra{display:grid;grid-template-columns:130px 1fr 60px;gap:10px;align-items:center;margin:8px 0;font-weight:600}
+  .pista{height:16px;border-radius:999px;background:#e7ece0;overflow:hidden}
+  .relleno{height:100%;background:var(--hoja);border-radius:999px}
+  .barra.top .relleno{background:var(--mango)}
   .accion{border-left:6px solid var(--hoja);background:#f0f5ec;border-radius:10px;padding:12px 14px;margin:10px 0}
   .accion.aviso{border-color:var(--mango);background:#fdf3e7}
   .accion.alerta{border-color:var(--rojo);background:#fbecea}
@@ -32,6 +41,7 @@
   .vacio{color:var(--suave)}
   table{width:100%;border-collapse:collapse;font-size:.9rem}
   th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #e3e8dc;vertical-align:top}
+  td img{width:56px;height:56px;object-fit:cover;border-radius:8px}
   .fila-botones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
   footer{max-width:760px;margin:auto;padding:0 20px 30px;color:var(--suave);font-size:.85rem}
 </style>
@@ -45,14 +55,22 @@
 
 <main>
   <section class="tarjeta">
-    <h2><span>1 · Percibe</span>Datos de entrada</h2>
+    <h2><span>1 · Percibe</span>La foto y los datos</h2>
+    <label class="foto"><input id="archivo" type="file" accept="image/*" capture="environment">📷 Tomar o subir una foto</label>
+    <img id="vista" alt="Foto que analizará el agente">
     <form id="formulario"></form>
-    <button class="principal" type="submit" form="formulario">Consultar al agente</button>
+    <button class="principal" id="consultar" type="submit" form="formulario" disabled>Consultar al agente</button>
+    <p class="estado" id="estado">Cargando el modelo…</p>
+  </section>
+
+  <section class="tarjeta">
+    <h2><span>Lo que ve</span>Resultado del modelo</h2>
+    <div id="ve"><p class="vacio">Toma una foto para ver qué reconoce el modelo.</p></div>
   </section>
 
   <section class="tarjeta">
     <h2><span>2 · Decide y actúa</span>Recomendación</h2>
-    <div id="resultado"><p class="vacio">Completa los datos y pulsa «Consultar al agente».</p></div>
+    <div id="resultado"><p class="vacio">Aquí aparecerá lo que recomienda el agente.</p></div>
   </section>
 
   <section class="tarjeta">
@@ -66,45 +84,55 @@
 </main>
 <footer id="pie"></footer>
 
-<script>
+<script type="module">
 // =====================================================================
 // EDITA DESDE AQUÍ · Todo lo que hace tu agente está en este bloque
 // =====================================================================
 const AGENTE = {
-  nombre: "Vigía de la cadena de frío",
+  nombre: "Semáforo del plátano",
   carrera: "Ejemplo a medias · IPA 204",
-  descripcion: "Revisa la temperatura de un producto refrigerado y recomienda qué hacer con el lote.",
+  descripcion: "Mira un plátano y recomienda qué hacer con él según su madurez.",
   autores: "Ejemplo del curso IPA 204",
 
+  // Este ejemplo usa el plan B (CLIP de Hugging Face) porque no necesita entrenamiento.
+  // Tu agente usará tu propio modelo de Teachable Machine (tipo "teachable").
+  modelo: { tipo: "clip", clases: {
+    "Verde": "a photo of a green unripe banana",
+    "Madura": "a photo of a ripe yellow banana",
+    "Pasada": "a photo of an overripe banana with many brown spots",
+  } },
+
   entradas: [
-    { id: "producto", etiqueta: "Producto", tipo: "opciones", opciones: ["Leche pasteurizada", "Yogur", "Queso fresco", "Carne"] },
-    { id: "temperatura", etiqueta: "Temperatura medida", tipo: "numero", min: -30, max: 40, unidad: "°C" },
-    { id: "minutos", etiqueta: "Tiempo fuera del rango", tipo: "numero", min: 0, max: 1440, unidad: "minutos" },
-    { id: "puerta", etiqueta: "¿La puerta de la cámara estuvo abierta?", tipo: "opciones", opciones: ["No", "Sí"] },
+    { id: "dias", etiqueta: "¿En cuántos días se venderá?", tipo: "numero", min: 0, max: 15, unidad: "días" },
   ],
 
-  // EJEMPLO A MEDIAS: un agente completo tiene entre 4 y 8 reglas.
-  // Este deja solo 2, para que veas cómo se escriben. Valores ilustrativos.
+  // EJEMPLO A MEDIAS: un agente completo tiene entre 4 y 8 reglas. Este deja solo 3.
   reglas: [
     {
-      si: (d) => d.temperatura > 8 && d.minutos > 120,
-      entonces: "Separar el lote y avisar a la persona responsable de calidad.",
-      nivel: "alerta",
-      porque: "Pasó más de 2 horas por encima de 8 °C: el riesgo para la inocuidad es alto.",
+      si: (d) => d.confianza < 0.6,
+      entonces: "No estoy seguro: toma otra foto con mejor luz.",
+      nivel: "aviso",
+      porque: (d) => `El modelo solo está ${Math.round(d.confianza * 100)} % seguro de que está ${d.clase.toLowerCase()}.`,
+      detener: true,
     },
     {
-      si: (d) => d.puerta === "Sí" && d.temperatura > 5,
-      entonces: "Cerrar la puerta y volver a medir en 15 minutos.",
-      nivel: "aviso",
-      porque: "La puerta abierta explica la subida de temperatura.",
+      si: (d) => d.clase === "Pasada",
+      entonces: "Usarlo hoy: para pan de plátano, batidos o compost.",
+      nivel: "alerta",
+      porque: (d) => `El modelo ve un plátano pasado (${Math.round(d.confianza * 100)} %).`,
     },
-    // ¿Qué falta? Por ejemplo: qué hacer entre 5 y 8 °C, qué pasa si el producto
-    // se congela, o si la carne necesita otro límite que los lácteos.
+    {
+      si: (d) => d.clase === "Madura" && d.dias > 2,
+      entonces: "Guardarlo en un lugar fresco: puede pasarse antes de venderse.",
+      nivel: "aviso",
+      porque: (d) => `Está maduro y faltan ${d.dias} días para la venta.`,
+    },
+    // ¿Qué falta? Por ejemplo: qué hacer con un plátano verde que se venderá mañana,
+    // o con uno maduro que se vende hoy.
   ],
 
-  sinReglas: { entonces: "El lote está dentro del rango. Seguir monitoreando.", porque: "Temperatura y tiempo dentro de lo esperado." },
-
-  limites: "Ejemplo incompleto, con valores ilustrativos: solo muestra cómo funciona un agente. No sirve para una planta real.",
+  sinReglas: { entonces: "Sin recomendación para este caso.", porque: "Ninguna regla se activó: ¡este ejemplo está incompleto!" },
+  limites: "Ejemplo incompleto: solo muestra cómo funciona un agente que ve. El tema del plátano no se puede usar como proyecto.",
 };
 // =====================================================================
 // HASTA AQUÍ · No hace falta cambiar lo que sigue
@@ -113,6 +141,8 @@ const AGENTE = {
 const $ = (id) => document.getElementById(id);
 const CLAVE = "historial-" + AGENTE.nombre;
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (x) => Math.round(x * 100) + " %";
+let clasificar = null, fotoLista = false;
 
 document.title = AGENTE.nombre;
 $("nombre").textContent = AGENTE.nombre;
@@ -122,88 +152,123 @@ $("pie").textContent = AGENTE.limites + " · Hecho por " + AGENTE.autores + ".";
 
 $("formulario").innerHTML = AGENTE.entradas.map((e) => {
   const etiqueta = `<label for="${e.id}">${esc(e.etiqueta)}${e.unidad ? ` <small>(${esc(e.unidad)})</small>` : ""}</label>`;
-  if (e.tipo === "opciones") {
-    return etiqueta + `<select id="${e.id}" required>${e.opciones.map((o) => `<option>${esc(o)}</option>`).join("")}</select>`;
-  }
+  if (e.tipo === "opciones") return etiqueta + `<select id="${e.id}" required>${e.opciones.map((o) => `<option>${esc(o)}</option>`).join("")}</select>`;
   return etiqueta + `<input id="${e.id}" type="number" step="any" required` +
     (e.min !== undefined ? ` min="${e.min}"` : "") + (e.max !== undefined ? ` max="${e.max}"` : "") + ">";
 }).join("");
 
-function leerDatos() {
-  const d = {};
-  for (const e of AGENTE.entradas) {
-    const v = $(e.id).value;
-    d[e.id] = e.tipo === "numero" ? Number(v) : v;
-  }
-  return d;
+function cargarScript(src) {
+  return new Promise((ok, mal) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = mal; document.head.appendChild(s); });
 }
+
+async function cargarModelo() {
+  const m = AGENTE.modelo;
+  if (m.tipo === "teachable") {
+    await cargarScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js");
+    await cargarScript("https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js");
+    const base = m.url.endsWith("/") ? m.url : m.url + "/";
+    const modelo = await window.tmImage.load(base + "model.json", base + "metadata.json");
+    return async (img) => (await modelo.predict(img)).map((p) => ({ clase: p.className.trim(), prob: p.probability }));
+  }
+  if (m.tipo === "clip") {
+    const { pipeline } = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2");
+    const clip = await pipeline("zero-shot-image-classification", "Xenova/clip-vit-base-patch32");
+    const nombres = Object.keys(m.clases), textos = Object.values(m.clases);
+    return async (img) => (await clip(img.src, textos)).map((r) => ({ clase: nombres[textos.indexOf(r.label)], prob: r.score }));
+  }
+  throw new Error("Tipo de modelo desconocido: " + m.tipo);
+}
+
+function listo() { $("consultar").disabled = !(clasificar && fotoLista); }
+
+cargarModelo().then((f) => {
+  clasificar = f;
+  $("estado").textContent = "Modelo listo. Toma o sube una foto.";
+  listo();
+}).catch((error) => {
+  $("estado").textContent = "No se pudo cargar el modelo. Revisa el enlace o la conexión a internet. (" + error.message + ")";
+});
+
+$("archivo").addEventListener("change", () => {
+  const archivo = $("archivo").files[0];
+  if (!archivo) return;
+  const lector = new FileReader();
+  lector.onload = () => { $("vista").src = lector.result; $("vista").style.display = "block"; };
+  lector.readAsDataURL(archivo);
+  $("vista").onload = () => { fotoLista = true; listo(); };
+});
 
 function decidir(d) {
   const activas = [];
-  const texto = (t) => (typeof t === "function" ? t(d) : t); // permite textos calculados con los datos
+  const texto = (t) => (typeof t === "function" ? t(d) : t);
   for (const r of AGENTE.reglas) {
     try {
       if (r.si(d)) {
         activas.push({ ...r, entonces: texto(r.entonces), porque: texto(r.porque) });
-        if (r.detener) break; // una regla con detener: true tiene prioridad sobre las siguientes
+        if (r.detener) break;
       }
     } catch (error) {
       activas.push({ entonces: "Error en una regla: revísala.", nivel: "alerta", porque: String(error) });
     }
   }
   const orden = { alerta: 0, aviso: 1, ok: 2 };
-  activas.sort((a, b) => (orden[a.nivel] ?? 2) - (orden[b.nivel] ?? 2)); // las alertas primero
+  activas.sort((a, b) => (orden[a.nivel] ?? 2) - (orden[b.nivel] ?? 2));
   return activas.length ? activas : [{ ...AGENTE.sinReglas, nivel: "ok" }];
 }
 
-function mostrar(acciones) {
-  $("resultado").innerHTML = acciones.map((a) =>
-    `<div class="accion ${a.nivel || "ok"}"><b>${esc(a.entonces)}</b><div class="porque">Por qué: ${esc(a.porque || "")}</div></div>`
-  ).join("");
+function miniatura(img) {
+  const c = document.createElement("canvas"), lado = 96;
+  const r = Math.max(lado / img.naturalWidth, lado / img.naturalHeight);
+  c.width = c.height = lado;
+  c.getContext("2d").drawImage(img, (lado - img.naturalWidth * r) / 2, (lado - img.naturalHeight * r) / 2, img.naturalWidth * r, img.naturalHeight * r);
+  return c.toDataURL("image/jpeg", 0.7);
 }
 
-function leerHistorial() {
-  try { return JSON.parse(localStorage.getItem(CLAVE)) || []; } catch { return []; }
-}
+function leerHistorial() { try { return JSON.parse(localStorage.getItem(CLAVE)) || []; } catch { return []; } }
 
 function mostrarHistorial() {
   const h = leerHistorial();
-  if (!h.length) {
-    $("historial").innerHTML = '<p class="vacio">Todavía no hay consultas.</p>';
-    return;
-  }
-  const columnas = AGENTE.entradas.map((e) => e.etiqueta);
-  $("historial").innerHTML = `<table><tr><th>Fecha</th>${columnas.map((c) => `<th>${esc(c)}</th>`).join("")}<th>Recomendación</th></tr>` +
-    h.slice().reverse().map((f) => `<tr><td>${esc(f.fecha)}</td>${AGENTE.entradas.map((e) => `<td>${esc(f.datos[e.id])}</td>`).join("")}<td>${esc(f.acciones.join(" | "))}</td></tr>`).join("") +
-    "</table>";
+  if (!h.length) { $("historial").innerHTML = '<p class="vacio">Todavía no hay consultas.</p>'; return; }
+  $("historial").innerHTML = `<table><tr><th>Foto</th><th>Fecha</th><th>Lo que vio</th>${AGENTE.entradas.map((e) => `<th>${esc(e.etiqueta)}</th>`).join("")}<th>Recomendación</th></tr>` +
+    h.slice().reverse().map((f) => `<tr><td><img src="${f.foto}" alt=""></td><td>${esc(f.fecha)}</td><td>${esc(f.clase)} (${pct(f.confianza)})</td>${AGENTE.entradas.map((e) => `<td>${esc(f.datos[e.id])}</td>`).join("")}<td>${esc(f.acciones.join(" | "))}</td></tr>`).join("") + "</table>";
 }
 
-$("formulario").addEventListener("submit", (ev) => {
+$("formulario").addEventListener("submit", async (ev) => {
   ev.preventDefault();
-  const datos = leerDatos();
-  const acciones = decidir(datos);
-  mostrar(acciones);
-  const h = leerHistorial();
-  h.push({ fecha: new Date().toLocaleString("es-BO"), datos, acciones: acciones.map((a) => a.entonces) });
-  localStorage.setItem(CLAVE, JSON.stringify(h));
-  mostrarHistorial();
+  $("consultar").disabled = true;
+  $("estado").textContent = "Mirando la foto…";
+  try {
+    const preds = (await clasificar($("vista"))).sort((a, b) => b.prob - a.prob);
+    const d = { clase: preds[0].clase, confianza: preds[0].prob, prob: {} };
+    preds.forEach((p) => { d.prob[p.clase] = p.prob; });
+    const datos = {};
+    for (const e of AGENTE.entradas) { const v = $(e.id).value; datos[e.id] = e.tipo === "numero" ? Number(v) : v; d[e.id] = datos[e.id]; }
+    $("ve").innerHTML = preds.map((p, i) => `<div class="barra${i === 0 ? " top" : ""}"><span>${esc(p.clase)}</span><div class="pista"><div class="relleno" style="width:${p.prob * 100}%"></div></div><span>${pct(p.prob)}</span></div>`).join("");
+    const acciones = decidir(d);
+    $("resultado").innerHTML = acciones.map((a) => `<div class="accion ${a.nivel || "ok"}"><b>${esc(a.entonces)}</b><div class="porque">Por qué: ${esc(a.porque || "")}</div></div>`).join("");
+    const h = leerHistorial();
+    h.push({ fecha: new Date().toLocaleString("es-BO"), foto: miniatura($("vista")), clase: d.clase, confianza: d.confianza, datos, acciones: acciones.map((a) => a.entonces) });
+    try { localStorage.setItem(CLAVE, JSON.stringify(h.slice(-30))); } catch { /* sin espacio: no se guarda */ }
+    mostrarHistorial();
+    $("estado").textContent = "Listo. Puedes probar con otra foto.";
+  } catch (error) {
+    $("estado").textContent = "Algo falló al analizar la foto: " + error.message;
+  }
+  listo();
 });
 
 $("descargar").addEventListener("click", () => {
   const h = leerHistorial();
   const celda = (t) => '"' + String(t).replace(/"/g, '""') + '"';
-  const filas = [["Fecha", ...AGENTE.entradas.map((e) => e.etiqueta), "Recomendación"].map(celda).join(",")]
-    .concat(h.map((f) => [f.fecha, ...AGENTE.entradas.map((e) => f.datos[e.id]), f.acciones.join(" | ")].map(celda).join(",")));
+  const filas = [["Fecha", "Lo que vio", "Confianza", ...AGENTE.entradas.map((e) => e.etiqueta), "Recomendación"].map(celda).join(",")]
+    .concat(h.map((f) => [f.fecha, f.clase, pct(f.confianza), ...AGENTE.entradas.map((e) => f.datos[e.id]), f.acciones.join(" | ")].map(celda).join(",")));
   const enlace = document.createElement("a");
   enlace.href = URL.createObjectURL(new Blob(["﻿" + filas.join("\n")], { type: "text/csv" }));
   enlace.download = "historial-agente.csv";
   enlace.click();
 });
 
-$("borrar").addEventListener("click", () => {
-  localStorage.removeItem(CLAVE);
-  mostrarHistorial();
-});
+$("borrar").addEventListener("click", () => { localStorage.removeItem(CLAVE); mostrarHistorial(); });
 
 mostrarHistorial();
 </script>

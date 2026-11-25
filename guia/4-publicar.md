@@ -1,4 +1,4 @@
-# 3 · Publicarlo en Hugging Face
+# 4 · Publicarlo en Hugging Face
 
 Van a crear un **Space estático**: una página web publicada en Hugging Face. Es gratis y no hay que instalar nada.
 
@@ -31,7 +31,7 @@ Vuelvan a la pestaña **App**. En unos segundos aparece su agente. El enlace par
 https://huggingface.co/spaces/SU-USUARIO/NOMBRE-DEL-SPACE
 ```
 
-Ese es el enlace que entregan en el hito 3. Ábranlo también desde el celular para ver que se usa bien.
+Ese es el enlace que entregan en el hito 3. Ábranlo también desde el celular: al tocar «Tomar o subir una foto», el celular les ofrece usar la cámara. La primera vez el modelo tarda unos segundos en cargar («Cargando el modelo…»).
 
 ## Actualizarlo
 
@@ -41,7 +41,7 @@ Cada vez que mejoren el agente, repitan **Files → index.html → Edit → pega
 
 | Problema | Qué hacer |
 | --- | --- |
-| La página sale en blanco | Pruébenla primero en su computadora (doble clic en el archivo). Si ahí también falla, el error está en el código: usen la instrucción de corrección de la [guía de vibecoding](2-vibecoding.md). |
+| La página sale en blanco | Pruébenla primero en su computadora (doble clic en el archivo). Si ahí también falla, el error está en el código: usen la instrucción de corrección de la [guía de vibecoding](3-vibecoding.md). |
 | Se ve el ejemplo de Hugging Face y no su agente | Revisen que guardaron con **Commit** y que el archivo se llama `index.html`. Recarguen la página. |
 | No encuentran la opción **Static** | Revisen que crearon un **Space** (no un modelo ni un dataset) desde [huggingface.co/new-space](https://huggingface.co/new-space). |
 | Les pide pagar | Elijan **Static**. Las otras opciones (Gradio, Docker) necesitan un plan pago y no las usamos. |

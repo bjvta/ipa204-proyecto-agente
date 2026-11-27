@@ -2,7 +2,7 @@
 
 Su agente va a **mirar fotos** y reconocer lo que ustedes le enseñen: una hoja sana o con plaga, un pan con moho o sin moho, un grano limpio o con impurezas. Para eso van a entrenar un modelo de IA con **sus propias fotos**, en [Teachable Machine](https://teachablemachine.withgoogle.com), una herramienta gratuita de Google que funciona en el navegador.
 
-Es lo mismo que vimos en la clase 5: el modelo aprende de ejemplos con su etiqueta.
+Es lo mismo que practicamos en el laboratorio de la clase 5 con el lapicero y el cuaderno: el modelo aprende de ejemplos con su etiqueta.
 
 ## Paso 1 · Decidan las clases
 
@@ -36,11 +36,13 @@ Anoten dónde y cuándo tomaron las fotos: lo van a necesitar para la revisión 
 1. Entren a [teachablemachine.withgoogle.com](https://teachablemachine.withgoogle.com) y pulsen **Comenzar** (*Get Started*).
 2. Elijan **Proyecto de imagen** (*Image Project*) → **Modelo de imagen estándar**.
 3. Cambien el nombre de cada **clase** (*Class 1*, *Class 2*…) por los nombres que eligieron. Escríbanlos con cuidado: los usarán en sus reglas.
-4. En cada clase, pulsen **Subir** (*Upload*) y suban sus fotos. También pueden usar la **cámara** (*Webcam*).
-5. Pulsen **Entrenar modelo** (*Train Model*) y esperen. No cierren la pestaña.
-6. **Pruébenlo** en el panel de la derecha con la cámara o con una foto nueva.
+4. En cada clase, pulsen **Subir** (*Upload*) y suban sus fotos. También pueden usar la **cámara** (*Webcam*): mantengan apretado el botón de grabar mientras mueven el objeto.
+5. Pulsen **Entrenar modelo** (*Train Model*) y esperen. **No cambien de pestaña**: si lo hacen, el entrenamiento se pausa.
+6. **Pruébenlo** en el panel de la derecha (*Vista previa*) con la cámara o con una foto nueva. Las barras muestran qué tan seguro está.
 
-¿Se equivoca mucho? Agreguen más fotos variadas a la clase que confunde y vuelvan a entrenar.
+¿Se equivoca mucho? Agreguen fotos **distintas** (otra luz, otro fondo, otra posición) a la clase que confunde y vuelvan a pulsar **Entrenar modelo**. Las fotos nuevas se suman a las anteriores. Para borrar una foto mala, pasen el mouse sobre ella y usen el ícono de basura.
+
+Para ver cuánto acierta cada clase: **Avanzado** → **Detalles internos** (*Under the hood*).
 
 ## Paso 4 · Exporten el enlace
 

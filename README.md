@@ -33,18 +33,17 @@ Ideas de problemas:
 
 ## Calendario
 
-| Hito | Fecha | Qué entregan (en clase, antes de salir) | Puntos |
-| --- | --- | --- | --- |
-| 1 · Lanzamiento | jueves 26/11 (clase 4) | Pareja, problema y qué verá su agente | 2 |
-| 2 · Ficha y fotos | lunes 30/11 (clase 6) | [Ficha](guia/ficha-del-agente.md) completa y sus primeras fotos | 4 |
-| 3 · Prototipo | jueves 03/12 (clase 9) | Modelo entrenado y su agente funcionando en Hugging Face | 6 |
-| 4 · Pruebas | martes 08/12 (clase 12) | 10 fotos nuevas probadas, con aciertos y errores | 5 |
-| 5 · Revisión ética | miércoles 09/12 (clase 13) | Privacidad, sesgo de sus fotos y límites | 3 |
-| Ensayo general | viernes 11/12 (clase 15) | Muestran el agente y reciben comentarios | — |
-| 6 · Presentación final | lunes 14/12 | 7 minutos y demostración en vivo con el celular | 10 |
-| | | **Total** | **30** |
+| Hito | Fecha | Qué muestran en clase, antes de salir |
+| --- | --- | --- |
+| 1 · Lanzamiento | jueves 26/11 (clase 4) | Pareja, problema y qué verá su agente |
+| 2 · Ficha y fotos | lunes 30/11 (clase 6) | [Ficha](guia/ficha-del-agente.md) completa y sus primeras fotos |
+| 3 · Prototipo | jueves 03/12 (clase 9) | Modelo entrenado y su agente funcionando en Hugging Face |
+| 4 · Pruebas | martes 08/12 (clase 12) | 10 fotos nuevas probadas, con aciertos y errores |
+| 5 · Revisión ética | miércoles 09/12 (clase 13) | Privacidad, sesgo de sus fotos y límites |
+| Ensayo general | viernes 11/12 (clase 15) | Muestran el agente y reciben comentarios |
+| **Presentación final** | **lunes 14/12** | **7 minutos y demostración en vivo con el celular** |
 
-Los criterios de cada hito están en la [rúbrica](rubrica.md).
+**Los hitos no tienen nota:** son revisiones para que reciban comentarios a tiempo. **La nota del proyecto (30 puntos) se pone solo en la presentación final.** Los criterios están en la [rúbrica](rubrica.md).
 
 ## Paso a paso
 
@@ -63,7 +62,7 @@ Los criterios de cada hito están en la [rúbrica](rubrica.md).
 plantilla/index.html     La plantilla del agente que ve: el punto de partida
 ejemplo/                 Un agente de ejemplo, incompleto a propósito, con fotos de prueba
 guia/                    El paso a paso
-rubrica.md               Cómo se califica cada hito
+rubrica.md               Cómo se califica la presentación final
 ```
 
 ## Lo que se exige

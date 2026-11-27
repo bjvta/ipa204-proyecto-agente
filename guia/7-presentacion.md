@@ -16,7 +16,7 @@ No hace falta una presentación con diapositivas: el agente funcionando es la pr
 
 ## Defensa individual
 
-Al terminar, el docente elige **una regla** de su agente y le pide a **cada integrante** que la explique: qué revisa, de dónde sale el valor y qué pasa en un caso límite. Los dos tienen que entender todo el agente, no solo su parte.
+Al terminar, el tribunal puede elegir **una regla** de su agente y le pide a **cada integrante** que la explique: qué revisa, de dónde sale el valor y qué pasa en un caso límite. Los dos tienen que entender todo el agente, no solo su parte.
 
 ## Antes del día
 

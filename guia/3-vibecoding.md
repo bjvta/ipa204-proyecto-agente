@@ -97,7 +97,7 @@ mi agente: qué hace cada regla y en qué orden se revisan.
 
 ## Mejora obligatoria
 
-Su agente tiene que incluir **una** de estas tres mejoras. Vale 3 de los 30 puntos de la presentación final. Agréguenla **después** de que el agente básico funcione.
+Su agente tiene que incluir **una** de estas tres mejoras. Es obligatoria y la mostrarán al tribunal en la presentación final. Agréguenla **después** de que el agente básico funcione.
 
 ### Opción A · Grados, como en lógica difusa (clase 4)
 

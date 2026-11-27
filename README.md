@@ -43,7 +43,7 @@ Ideas de problemas:
 | Ensayo general | viernes 11/12 (clase 15) | Muestran el agente y reciben comentarios |
 | **Presentación final** | **lunes 14/12** | **7 minutos y demostración en vivo con el celular** |
 
-**Los hitos no tienen nota:** son revisiones para que reciban comentarios a tiempo. **La nota del proyecto (30 puntos) se pone solo en la presentación final.** Los criterios están en la [rúbrica](rubrica.md).
+Los hitos son **revisiones en clase**: muestran su avance y reciben comentarios a tiempo. **La presentación final del lunes 14/12 la evalúa un tribunal.** Para prepararla, sigan la [guía de la presentación](guia/7-presentacion.md).
 
 ## Paso a paso
 
@@ -62,7 +62,6 @@ Ideas de problemas:
 plantilla/index.html     La plantilla del agente que ve: el punto de partida
 ejemplo/                 Un agente de ejemplo, incompleto a propósito, con fotos de prueba
 guia/                    El paso a paso
-rubrica.md               Cómo se califica la presentación final
 ```
 
 ## Lo que se exige
@@ -71,7 +70,7 @@ rubrica.md               Cómo se califica la presentación final
 2. **Reglas con fuente.** Las reglas salen de una **entrevista** a alguien que trabaja en el tema o de una **fuente técnica concreta**. No valen valores inventados.
 3. **Una regla difícil.** Al menos una regla combina lo que ve el modelo con otro dato (por ejemplo: «con plaga» **y** etapa de floración). Además, encuentran un caso donde dos reglas recomiendan cosas distintas y explican cuál debe ganar.
 4. **Una mejora obligatoria.** Una de las [mejoras de la guía](guia/3-vibecoding.md#mejora-obligatoria): grados como en lógica difusa, un puntaje de riesgo con pesos o prioridad entre reglas.
-5. **Defensa individual.** En la presentación, cada integrante explica una regla que elige el docente.
+5. **Defensa individual.** En la presentación, cada integrante debe poder explicar cualquier regla que le pregunte el tribunal.
 
 ## Reglas del proyecto
 

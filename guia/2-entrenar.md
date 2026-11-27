@@ -61,7 +61,7 @@ Ese enlace son los «ojos» de su agente. Lo pegarán en la plantilla (paso sigu
 
 ## Plan B: sin entrenar
 
-Si no logran juntar fotos suficientes, la plantilla también funciona con un modelo de Hugging Face (CLIP) que compara la foto con descripciones escritas en inglés, sin entrenar. Es el que usa el [ejemplo](../ejemplo/index.html). Consulten antes con el docente: el plan A (sus propias fotos) vale más en la rúbrica.
+Si no logran juntar fotos suficientes, la plantilla también funciona con un modelo de Hugging Face (CLIP) que compara la foto con descripciones escritas en inglés, sin entrenar. Es el que usa el [ejemplo](../ejemplo/index.html). Consulten antes con el docente: el plan A (sus propias fotos) es lo que se espera del proyecto.
 
 ## Listo cuando…
 
